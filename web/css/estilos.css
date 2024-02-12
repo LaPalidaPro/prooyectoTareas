@@ -1,50 +1,58 @@
-body{
+body {
     margin-top: 50px;
     background-image: url("./imagenFondo/fondo.jpg");
 }
-.tarea{
-    border:1px solid gray;
+
+.tarea {
+    border: 1px solid gray;
     padding: 10px;
     position: relative;
     width: 60%;
     margin: 2px auto;
     font-size: 1.5em;
 }
-.papelera{
+
+.papelera {
     position: relative;
-    top:10px;
+    top: 10px;
     right: 5px;
     color: #a392fb;
 }
-.papelera:hover{
-    color:#7d64fc;
+
+.papelera:hover {
+    color: #7d64fc;
     cursor: pointer;
 }
-.editar{
+
+.editar {
     position: relative;
     margin-left: 10px;
     margin-right: 10px;
-    top:5px;
+    top: 5px;
     right: 5px;
     color: #a392fb;
 }
-.editar:hover{
-    color:#7d64fc;
+
+.editar:hover {
+    color: #7d64fc;
     cursor: pointer;
 }
-.tick{
+
+.tick {
     position: relative;
-    top:10px;
+    top: 10px;
     right: 5px;
     color: #a392fb;
 }
-.tick:hover{
-    color:#7d64fc;
+
+.tick:hover {
+    color: #7d64fc;
     cursor: pointer;
 }
-#nuevaTarea{
+
+#nuevaTarea {
     display: inline-block;
-    border:1px solid gray;
+    border: 1px solid gray;
     padding: 10px;
     position: relative;
     width: 40%;
@@ -52,70 +60,100 @@ body{
     font-size: 1.5em;
     margin-left: 20%;
 }
-#botonNuevaTarea{
+
+#botonNuevaTarea {
     display: inline-flex;
-    border:1px solid gray;
+    border: 1px solid gray;
     padding: 10px;
-    position:relative;
+    position: relative;
     width: 20%;
     margin: 10px auto;
     font-size: 1.5em;
     cursor: pointer;
     background-color: #7d64fc;
 }
-#preloaderInsertar{
+
+#preloaderInsertar {
     height: 60px;
     vertical-align: middle;
     visibility: hidden;
 }
-.preloaderBorrar{
+
+.preloaderBorrar {
     position: absolute;
-    top:5px;
+    top: 5px;
     right: 2px;
     height: 30px;
     visibility: hidden;
 }
-.btnLogin{
-    background-color:#a392fb ;
-    border:1px solid gray;
+
+.btnLogin {
+    background-color: #a392fb;
+    border: 1px solid gray;
 }
-.btnLogin:hover{
-    background-color:#7d64fc;
-    border:1px solid gray;
+
+.btnLogin:hover {
+    background-color: #7d64fc;
+    border: 1px solid gray;
 }
-.btnRegistro{
+
+.btnRegistro {
     color: #a392fb;
     background-color: transparent;
     border: none;
-    
+
 }
-.btnRegistro:hover{
+
+.btnRegistro:hover {
     color: #7d64fc;
     background-color: transparent;
     border: none;
-    
+
 }
-.btnRegistrarse{
+
+.btnRegistrarse {
     background-color: #a392fb;
-    border:1px solid gray;
+    border: 1px solid gray;
 }
-.btnRegistrarse:hover{
+
+.btnRegistrarse:hover {
     background-color: #7d64fc;
-    border:1px solid gray;
+    border: 1px solid gray;
 }
-#imagenT{
+
+#imagenT {
     vertical-align: middle;
     border-radius: -2px;
     width: 115px;
     border: 1px solid #c1c1c1;
     margin-left: -131px;
     min-width: 78px;
-    
+
 }
-.card-body{
+
+.card-body {
     display: flex
 }
-p{
+
+p {
     display: inline-block;
     margin-left: 40px;
+}
+
+#btnCerrarSesion {
+    justify-content: end;
+    display: flex;
+    color: #a392fb;
+    background-color: transparent;
+    border: none;
+}
+
+#btnCerrarSesion:hover {
+    color: #7d64fc;
+    background-color: transparent;
+    border: none;
+}
+
+#validaciones {
+    color: red;
 }

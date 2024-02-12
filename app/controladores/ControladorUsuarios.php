@@ -25,6 +25,7 @@ Class ControladorUsuarios{
             $usuariosDAO = new UsuariosDAO($conn);
             if ($usuariosDAO->getByEmail($email) !== null) {
                 $error = "Ya hay un usuario con ese email";
+                guardarMensaje("*Ya hay un usuario con ese email");
             }
 
             if ($error === '') { // Si no hay error
@@ -39,9 +40,10 @@ Class ControladorUsuarios{
 
                 if ($usuariosDAO->insert($usuario)) {
                     header("location: index.php");
+                    guardarMensaje("* Registro realizado correctamente", "success");
                     die();
                 } else {
-                    $error = "No se ha podido insertar el usuario";
+                    guardarMensaje("*Error al insertar el usuario en la base de datos", "danger");
                 }
             }
         }
@@ -73,7 +75,7 @@ Class ControladorUsuarios{
             die();
         } else {
             // Email o password incorrectos, redirigir a index.php
-            guardarMensaje("Email o password incorrectos " . $email . " " . $password);
+            guardarMensaje("Email o password incorrectos ");
             header('location: index.php');
         }
     }

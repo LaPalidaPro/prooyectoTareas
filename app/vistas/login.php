@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login y Registro con Bootstrap</title>
+    <title>Login y Registro</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="web/css/estilos.css">
 </head>
@@ -12,8 +12,9 @@
 <div class="container mt-5">
     <!-- Página de Login -->
     <div class="col-md-6 offset-md-3 mx-auto"> <!-- Se agrega la clase mx-auto para centrar horizontalmente -->
+    <p id="validaciones"><?php echo imprimirmensaje(); ?></p>
+
         <h2>Login</h2>
-        <?php imprimirMensaje(); ?> 
         <form action="index.php?accion=login" method="post" id="loginForm">
             <div class="form-group">
                 <label for="email">Email:</label>

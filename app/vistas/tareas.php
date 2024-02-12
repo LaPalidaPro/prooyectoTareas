@@ -15,14 +15,13 @@
 
     <div class="container mt-4">
         <h1>Lista de Tareas</h1>
-
-        <?php
-        // Verificar si el usuario está definido y no es nulo
-        if ($usuario) {
+        <?php 
+        if (Sesion::existeSesion()) {
+        $usuario = Sesion::getUsuario();
+        echo '<a id="btnCerrarSesion" href="?cerrar_sesion=true">Cerrar Sesión</a>';
             // Imprimir información del usuario
             echo "<h2>¡Bienvenid@ " . $usuario->getNombre() . "!</h2>";
         ?>
-
             <!-- Lista de tareas -->
             <div id="tareas">
                 <?php foreach ($tareas as $tarea) : ?>
