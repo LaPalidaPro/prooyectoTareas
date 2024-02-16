@@ -123,15 +123,19 @@ class ControladorTareas
             //Limpiamos los datos que vienen del usuario
 
             $texto = htmlspecialchars($_POST['texto']);
-            $idUsuario = Sesion::getUsuario()->getId();
 
+            $tarea = $tareasDAO->obtenerTareaPorID($idTarea);
+            $tarea->setTexto($texto);
+            $tareasDAO->update($tarea);
+            $idUsuario = Sesion::getUsuario()->getId();
+            header('location: index.php?accion=ver_tareas');
             //Validamos los datos
             if (empty($texto)) {
                 $error = "El texto no se ha cambiado";
             } else {
             }
         } //if($_SERVER['REQUEST_METHOD']=='POST'){
-
+        
         require 'app/vistas/editarTarea.php';
     }
 

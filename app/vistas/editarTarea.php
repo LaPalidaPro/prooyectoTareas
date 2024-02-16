@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary btnRegistrarse">Enviar</button>
+                        <button type="submit" class="btn btn-primary btnRegistro"> <a id="volver" href="index.php?accion=ver_tareas"></a></a>Editar</button>
                        
                         
                     </div>

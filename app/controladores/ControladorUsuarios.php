@@ -68,12 +68,16 @@ Class ControladorUsuarios{
             Sesion::iniciarSesion($usuario);
             // Creamos la cookie para que nos recuerde 1 semana
             setcookie('sid', $usuario->getSid(), time() + 24 * 60 * 60, '/');
-            guardarMensajeLogin("* Email o password incorrectos ");
+
             // Redirigimos a index.php?accion=inicio
             header('location: index.php?accion=ver_tareas');
             die();
         } else {
             // Email o password incorrectos, redirigir a index.php
+            if(Sesion::cerrarSesion()){
+                guardarMensajeLogin("* La sesion se ha cerrado");
+                guardarMensaje("* La sesion se ha cerrado");
+            }
             guardarMensajeLogin("* Email o password incorrectos ");
             header('location: index.php');
         }

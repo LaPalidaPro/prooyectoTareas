@@ -51,7 +51,7 @@ function actualizarAparienciaTick(idTarea, nuevoEstado) {
         tick.classList.remove("fa-solid");
         tick.classList.add("fa-regular");
         tick.style.visibility = 'visible';
-        tick.parentElement.querySelector('img').style.visibility = "hidden";
+        tick.parentElement.querySelector('img').style.visibility = "visible";
         let textoTarea = tick.parentElement.querySelector('.card-text');
         textoTarea.style.opacity = 1; // Restaurar opacidad
         textoTarea.style.textDecoration = "none"; // Eliminar el tachado
