@@ -12,7 +12,15 @@ function generarNombreArchivo(string $nombreOriginal):string {
 function guardarMensaje($mensaje){
     $_SESSION['error']=$mensaje;
 }
-
+function guardarMensajeLogin($mensaje){
+    $_SESSION['login-validaciones']=$mensaje;
+}
+function imprimirMensajeLogin(){
+    if(isset($_SESSION['login-validaciones'])){
+        echo '<div class="login-validaciones">'.$_SESSION['login-validaciones'].'</div>';
+        unset($_SESSION['login-error']);
+    } 
+}
 function imprimirMensaje(){
     if(isset($_SESSION['error'])){
         echo '<div class="error" id="mensajeError">'.$_SESSION['error'].'</div>';

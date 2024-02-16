@@ -50,25 +50,15 @@ body {
     cursor: pointer;
 }
 
-#nuevaTarea {
-    display: inline-block;
-    border: 1px solid gray;
-    padding: 10px;
-    position: relative;
-    width: 40%;
-    margin: 10px auto;
-    font-size: 1.5em;
-    margin-left: 20%;
-}
+
 
 #botonNuevaTarea {
-    display: inline-flex;
+
     border: 1px solid gray;
     padding: 10px;
     position: relative;
-    width: 20%;
+    width: 100%;
     margin: 10px auto;
-    font-size: 1.5em;
     cursor: pointer;
     background-color: #7d64fc;
 }
@@ -155,5 +145,48 @@ p {
 }
 
 #validaciones {
+    color: red;
+}
+
+#mensajeBienvenida {
+    display: flex;
+    justify-content: end;
+}
+
+.papeleraImg {
+    color: #a392fb;
+    display: flex;
+    justify-content: end;
+}
+
+.papeleraImg:hover {
+    color: #7d64fc;
+    cursor: pointer;
+}
+
+#volver {
+    color: #a392fb;
+    display: flex;
+    justify-content: end;
+}
+
+#volver:hover {
+    color: #7d64fc;
+    cursor: pointer;
+}
+.pencil{
+    color: #a392fb;
+    margin-right: 20px;
+    
+}
+.pencil:hover {
+    color: #7d64fc;
+    cursor: pointer;
+}
+.botones{
+    display: flex;
+    justify-content: end;
+}
+.login-validaciones{
     color: red;
 }

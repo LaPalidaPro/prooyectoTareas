@@ -14,14 +14,18 @@
 <body>
 
     <div class="container mt-4">
-        <h1>Lista de Tareas</h1>
+        
         <?php 
+
         if (Sesion::existeSesion()) {
+            echo "<h3 id='mensajeBienvenida'>¡Bienvenid@" . " " . $usuario->getNombre() . "!</h3>";
         $usuario = Sesion::getUsuario();
         echo '<a id="btnCerrarSesion" href="?cerrar_sesion=true">Cerrar Sesión</a>';
             // Imprimir información del usuario
-            echo "<h2>¡Bienvenid@ " . $usuario->getNombre() . "!</h2>";
+            
         ?>
+            <h1>Tu lista de Tareas</h1>
+
             <!-- Lista de tareas -->
             <div id="tareas">
                 <?php foreach ($tareas as $tarea) : ?>

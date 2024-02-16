@@ -24,8 +24,7 @@ Class ControladorUsuarios{
             // Compruebo que no haya un usuario registrado con el mismo email
             $usuariosDAO = new UsuariosDAO($conn);
             if ($usuariosDAO->getByEmail($email) !== null) {
-                $error = "Ya hay un usuario con ese email";
-                guardarMensaje("*Ya hay un usuario con ese email");
+                guardarMensajeLogin("* Ya hay un usuario con ese email");
             }
 
             if ($error === '') { // Si no hay error
@@ -40,10 +39,10 @@ Class ControladorUsuarios{
 
                 if ($usuariosDAO->insert($usuario)) {
                     header("location: index.php");
-                    guardarMensaje("* Registro realizado correctamente", "success");
+                    guardarMensajeLogin("* Registro realizado correctamente", "success");
                     die();
                 } else {
-                    guardarMensaje("*Error al insertar el usuario en la base de datos", "danger");
+                    guardarMensajeLogin("* Error al insertar el usuario en la base de datos", "danger");
                 }
             }
         }
@@ -69,13 +68,13 @@ Class ControladorUsuarios{
             Sesion::iniciarSesion($usuario);
             // Creamos la cookie para que nos recuerde 1 semana
             setcookie('sid', $usuario->getSid(), time() + 24 * 60 * 60, '/');
-            guardarMensaje( $email . " " . $password." ".$usuario->getId());
+            guardarMensajeLogin("* Email o password incorrectos ");
             // Redirigimos a index.php?accion=inicio
             header('location: index.php?accion=ver_tareas');
             die();
         } else {
             // Email o password incorrectos, redirigir a index.php
-            guardarMensaje("Email o password incorrectos ");
+            guardarMensajeLogin("* Email o password incorrectos ");
             header('location: index.php');
         }
     }

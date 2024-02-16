@@ -12,7 +12,7 @@
 <div class="container mt-5">
     <!-- Página de Login -->
     <div class="col-md-6 offset-md-3 mx-auto"> <!-- Se agrega la clase mx-auto para centrar horizontalmente -->
-    <p id="validaciones"><?php echo imprimirmensaje(); ?></p>
+    <p id="validaciones"><?php echo imprimirMensajeLogin(); ?></p>
 
         <h2>Login</h2>
         <form action="index.php?accion=login" method="post" id="loginForm">

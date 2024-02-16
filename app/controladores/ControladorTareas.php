@@ -52,29 +52,51 @@ class ControladorTareas
     }
 
     public function borrar()
-{
-    // Conectamos con la BD
-    $connexionDB = new ConnexionDB(MYSQL_USER, MYSQL_PASS, MYSQL_HOST, MYSQL_DB);
-    $conn = $connexionDB->getConnexion();
-    $idTarea = htmlentities($_GET['id']);
+    {
+        // Conectamos con la BD
+        $connexionDB = new ConnexionDB(MYSQL_USER, MYSQL_PASS, MYSQL_HOST, MYSQL_DB);
+        $conn = $connexionDB->getConnexion();
+        $idTarea = htmlentities($_GET['id']);
 
-    $tareasDAO = new TareasDAO($conn);
-    if ($tarea = $tareasDAO->borrarTarea($idTarea)) {
-        print json_encode(['respuesta' => 'ok']);
-    } else {
-        print json_encode(['respuesta' => 'error', 'mensaje' => 'Tarea no encontrada']);
+        $tareasDAO = new TareasDAO($conn);
+        if ($tarea = $tareasDAO->borrarTarea($idTarea)) {
+            print json_encode(['respuesta' => 'ok']);
+        } else {
+            print json_encode(['respuesta' => 'error', 'mensaje' => 'Tarea no encontrada']);
+        }
+
+        // Detenemos la ejecución 1 segundo para simular que el servidor tarda 1 segundo en responder
+        sleep(1);
+        // Enviamos la redirección antes de enviar la respuesta JSON
+
+        die();
     }
+    public function borrarImagenTarea()
+    {
+        $connexionDB = new ConnexionDB(MYSQL_USER, MYSQL_PASS, MYSQL_HOST, MYSQL_DB);
+        $conn = $connexionDB->getConnexion();
 
-    // Detenemos la ejecución 1 segundo para simular que el servidor tarda 1 segundo en responder
-    sleep(1);
-    // Enviamos la redirección antes de enviar la respuesta JSON
+        if ($idTarea = $_GET['id']) {
+            $tareasDAO = new TareasDAO($conn);
+            $tarea = $tareasDAO->obtenerTareaPorID($idTarea);
+            $nombreImagen = $tarea->getFoto();
+            $rutaImagen = "web/images/" . $nombreImagen;
 
-    die();
-}
-    public function verEditar(){
+            if (unlink($rutaImagen)) {
+                guardarMensaje('La imagen se ha eliminado correctamente');
+                print json_encode(['respuesta' => 'ok']);
+            }else{
+                guardarMensaje('La imagen no se ha eliminado correctamente');
+            }
+        }else{
+            guardarMensaje( 'No se proporcionó un ID válido');
+        }
+    }
+    public function verEditar()
+    {
         require 'app/vistas/editarTarea.php';
     }
-  
+
     public function editar()
     {
         $error = '';
@@ -112,7 +134,7 @@ class ControladorTareas
 
         require 'app/vistas/editarTarea.php';
     }
-    
+
 
     public function insertar()
     {
@@ -163,61 +185,61 @@ class ControladorTareas
         require 'app/vistas/tareas.php';
     }
     function anadirImagenTarea()
-{
-    // Validar la existencia de la variable $_FILES['imagen']
-    if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
-        // Manejar el error relacionado con la carga del archivo
+    {
+        // Validar la existencia de la variable $_FILES['imagen']
+        if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
+            // Manejar el error relacionado con la carga del archivo
+            exit();
+        }
+
+        // Obtener el ID de la tarea de la solicitud
+        $idTarea = htmlentities($_GET['id']);
+
+        // Validar la existencia del ID de la tarea
+        if (empty($idTarea)) {
+            // Manejar el error si el ID de la tarea no está presente
+            exit();
+        }
+
+        // Obtener el nombre del archivo de la imagen cargada
+        $nombreArchivo = htmlentities($_FILES['imagen']['name']);
+
+        // Validar la existencia del nombre de archivo
+        if (empty($nombreArchivo)) {
+            // Manejar el error si el nombre de archivo está vacío
+            exit();
+        }
+
+        // Obtener la extensión del archivo
+        $extension = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION));
+
+        // Validar el tipo de archivo permitido
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array($extension, $extensionesPermitidas)) {
+            guardarMensaje("El tipo de archivo no esta permitido");
+            exit();
+        }
+        // Generar un nombre de archivo único para evitar conflictos
+        $nombreArchivoUnico = md5(uniqid() . time()) . '.' . $extension;
+        // Mover el archivo cargado a la carpeta de destino
+        $carpetaDestino = "web/images/";
+        move_uploaded_file($_FILES['imagen']['tmp_name'], $carpetaDestino . $nombreArchivoUnico);
+        // Conectar a la base de datos
+        $connexionDB = new ConnexionDB(MYSQL_USER, MYSQL_PASS, MYSQL_HOST, MYSQL_DB);
+        $conn = $connexionDB->getConnexion();
+        // Obtener la tarea por su ID
+        $tareasDAO = new TareasDAO($conn);
+        $tarea = $tareasDAO->obtenerTareaPorID($idTarea);
+        // Actualizar la tarea con el nombre del archivo de la imagen
+        $tarea->setFoto($nombreArchivoUnico);
+        $tareasDAO->update($tarea);
+        // Devolver una respuesta JSON con el nombre del archivo subido
+        header('Content-Type: application/json');
+        print json_encode(['respuesta' => 'ok', 'nombreArchivo' => $nombreArchivoUnico]);
         exit();
     }
 
-    // Obtener el ID de la tarea de la solicitud
-    $idTarea = htmlentities($_GET['id']);
 
-    // Validar la existencia del ID de la tarea
-    if (empty($idTarea)) {
-        // Manejar el error si el ID de la tarea no está presente
-        exit();
-    }
-
-    // Obtener el nombre del archivo de la imagen cargada
-    $nombreArchivo = htmlentities($_FILES['imagen']['name']);
-
-    // Validar la existencia del nombre de archivo
-    if (empty($nombreArchivo)) {
-        // Manejar el error si el nombre de archivo está vacío
-        exit();
-    }
-
-    // Obtener la extensión del archivo
-    $extension = strtolower(pathinfo($nombreArchivo, PATHINFO_EXTENSION));
-
-    // Validar el tipo de archivo permitido
-    $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif'];
-    if (!in_array($extension, $extensionesPermitidas)) {
-        guardarMensaje("El tipo de archivo no esta permitido");
-        exit();
-    }
-    // Generar un nombre de archivo único para evitar conflictos
-    $nombreArchivoUnico = md5(uniqid() . time()) . '.' . $extension;
-    // Mover el archivo cargado a la carpeta de destino
-    $carpetaDestino = "web/images/";
-    move_uploaded_file($_FILES['imagen']['tmp_name'], $carpetaDestino . $nombreArchivoUnico);
-    // Conectar a la base de datos
-    $connexionDB = new ConnexionDB(MYSQL_USER, MYSQL_PASS, MYSQL_HOST, MYSQL_DB);
-    $conn = $connexionDB->getConnexion();
-    // Obtener la tarea por su ID
-    $tareasDAO = new TareasDAO($conn);
-    $tarea = $tareasDAO->obtenerTareaPorID($idTarea);
-    // Actualizar la tarea con el nombre del archivo de la imagen
-    $tarea->setFoto($nombreArchivoUnico);
-    $tareasDAO->update($tarea);
-    // Devolver una respuesta JSON con el nombre del archivo subido
-    header('Content-Type: application/json');
-    print json_encode(['respuesta' => 'ok', 'nombreArchivo' => $nombreArchivoUnico]);
-    exit();
-}
-
-    
 
 
     function tareaEstado()
@@ -227,7 +249,7 @@ class ControladorTareas
             $conn = $connexionDB->getConnexion();
 
             $idTarea = isset($_GET['id']) ? htmlspecialchars($_GET['id']) : null;
-           
+
             if (!$idTarea) {
                 print json_encode(['respuesta' => 'error', 'mensaje' => 'ID de tarea no proporcionado']);
                 return;
@@ -244,7 +266,7 @@ class ControladorTareas
                 $tareasDAO->update($tarea);
 
                 print json_encode(['respuesta' => 'ok', 'nuevoEstado' => $nuevoEstado]);
-                
+
                 exit;
             }
         } catch (Exception $e) {

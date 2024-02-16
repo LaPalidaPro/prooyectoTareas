@@ -32,10 +32,11 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h1 class="text-center">Edita tu tarea</h1>
+                <a id="volver" href="index.php?accion=ver_tareas">Volver</a>
                 <?php imprimirMensaje(); ?>
                 <form action="index.php?accion=editarTarea&idTarea=<?= $idTarea ?>" method="post" data-idTarea="<?= $idTarea ?>" id="formularioEditar" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="texto" class="form-label">Texto del mensaje:</label>
+                        <label for="texto" class="form-label"><h5>Texto del mensaje:</h5></label>
                         <textarea id="texto" name="texto" class="form-control" placeholder="Texto"><?= $tarea->getTexto() ?></textarea>
                     </div>
                     <div class="mb-3">
@@ -43,16 +44,23 @@
                             <!-- Aquí se mostrará la imagen -->
                             <img id="imagenTarea" src="web/images/<?= $tarea->getFoto() ?>" class="imagenTarea" alt="no hay imagen">
                         </div>
-                        <div class="text-center">
-                            <label for="inputFileImage" class="btn btn-primary btnRegistro">
-                                <i class="fas fa-pencil-alt"></i> Editar Imagen
-                            </label>
+                        
+                        
+                        <div class="botones">
+                           
+                            <i class="fas fa-pencil-alt pencil"></i> 
                             <input type="file" id="inputFileImage" name="imagen" style="display: none;">
+                                <?php 
+                        if($tarea->getFoto()){
+                            echo '<i class="fa-solid fa-trash papeleraImg"></i>';
+                        }
+                        ?>
+                          
                         </div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btnRegistrarse">Enviar</button>
-                        <a href="index.php?accion=ver_tareas">Volver</a>
+                       
                         
                     </div>
                 </form>
